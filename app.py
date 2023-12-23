@@ -44,7 +44,82 @@ s3 = boto3.client('s3',
                  aws_secret_access_key=aws_secret_access_key,
                  region_name=region_name)
 
+def Get_StockTop(Date):
+    url = f'https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX20?date={Date}&response=json'
+    data = requests.get(url).text
+    json_data = json.loads(data)
+    today_date = datetime.now().strftime('%Y-%m-%d')
+    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    # stock_data = [[row[0], row[1], row[2], today_date] for row in json_data['data']]
+    # print(stock_data)
+    cnx = db_pool.get_connection()
+    cursor = cnx.cursor()
+    check_sql = "SELECT COUNT(*) FROM top WHERE date = %s"
+    cursor.execute(check_sql, (today_date,))
+    count = cursor.fetchone()[0]
 
+
+    if count > 0:
+        # cursor.close()
+        # cnx.close()
+        print("今日已加入新熱門股資料，不再加入")
+        return "今日已加入新熱門股資料，不再加入"
+
+    try:
+        if 'data' not in json_data:
+            print("查無今日熱門股資料")
+            return "查無今日熱門股資料"
+        
+        for row in json_data['data']:
+            top_data=row[0], row[1], row[2], today_date
+            print(top_data)
+
+            sql = "INSERT INTO top (stock_top, code, name, date) VALUES (%s, %s, %s, %s)"
+            cursor.execute(sql, top_data)
+        cnx.commit()
+        # print("INSERT INTO top Closing database connection.")
+        # cursor.close()
+        # cnx.close()
+        print("成功加入新熱門股資料")
+        return "成功加入新熱門股資料"
+      
+    finally:
+            print("finally Closing database connection.")
+            cursor.close()
+            cnx.close()
+
+
+def job():
+    today = datetime.now().strftime("%Y%m%d")
+    stock_data = Get_StockTop(today)
+    print("stock_data:",stock_data)
+    print("run_job")
+
+
+is_exit = False
+def run_scheduling():
+    while True:
+        if is_exit:
+           break  
+        schedule.run_pending()
+        time.sleep(1)
+
+#AWS("09:00") TW(17:00)
+schedule.every().day.at("09:50").do(job)  
+
+
+thread = Thread(target=run_scheduling)
+thread.start()
+
+def signal_handler(sig, frame):
+    print("Received Ctrl+C, exiting gracefully")
+    global is_exit
+    print("Exiting")  
+    is_exit = True
+    schedule.clear()
+    exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 class TestStrategy(bt.Strategy):
         params = (("maperiod", 15),)
@@ -760,7 +835,40 @@ def backtest():
     
     return jsonify(result),200
 
+@app.route("/api/stocktop", methods=["GET"])
+def get_top_stocks():
+    try:
+        cnx = db_pool.get_connection()
+        cursor = cnx.cursor()
+        sql = "select * FROM top ORDER BY date DESC LIMIT 20"
+        cursor.execute(sql)
+        result  = cursor.fetchall()
+        stock_data = []
+        # print("res:",result )
+        print("進入取得熱門股")
+        for row in result:
 
+            if any(char.isalpha() and char.isascii() for char in row[2]):
+                continue
+            stock_data.append({
+            'id': row[0],
+            'top': row[1],
+            'code': row[2],
+            'name': row[3],
+            'date': row[4].strftime('%Y-%m-%d')
+        })
+        # print("stock_data:",stock_data)
+        print("進入網頁成功取得熱門股")
+        return jsonify(stock_data),200
+        
+    except Exception as e:
+        error_message = "伺服器內部錯誤：" + str(e)
+        error_response = {"error": True, "message": error_message}
+        return jsonify(error_response), 500
+    finally:
+        print("get_top_stocks Closing database connection.")
+        cursor.close()
+        cnx.close()
     
 
 app.run(host="0.0.0.0", port=5000)
