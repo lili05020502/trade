@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xtrade</title>
+    <link rel="stylesheet" type="text/css" href="/public/css/index.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="bar">
+            <div class="title_container">
+                <h1 class="title">XTrade</h1>
+            </div>
+            <div class="bar_item">策略回測</div>
+        </div>
+        <div class="container">
+            <h2 class="bt_title">量化策略回測</h2>
+            <div id="stockList"><h3>近期熱門股</h3></div>
+            <div class="container_group">
+                <div class="strategy_set">
+                    <h3>策略設定</h3>
+                    <div class="ss_item">
+                        <label for="symbol" class="ss_itit">輸入回測股票代號</label>
+                        <input id="symbolinput" type="text" id="symbol" name="symbol" required />
+                    </div>
+
+                    <div class="ss_item">
+                        <label for="strategy" class="ss_itit">選擇回測策略</label>
+                        <select id="strategyinput" name="strategy" class="select_st">
+                            <!-- <option value="TestStrategy">測試策略</option> -->
+                            <option value="SmaStrategy">均線策略</option>
+                            <option value="Kdstrategy">KD</option>
+                            <option value="Blstrategy">布林通道</option>
+                            <option value="Macdstrategy">MACD</option>
+                        </select>
+                    </div>
+                    <div class="ss_item">
+                        <label for="money" class="ss_itit">輸入初始資金</label>
+                        <input id="moneyInput" type="number" name="money" value="1000000" placeholder="初始資金" required>
+                    </div>
+                    <div class="ss_item">
+                        <label for="shares" class="ss_itit">輸入下單股數</label>
+                        <input id="sharesInput" type="number" name="shares" placeholder="下單股數" required>
+                    </div>
+                    <div class="ss_item">
+                        <label for="commission" class="ss_itit">輸入交易費率</label>
+                        <input id="commissionInput" type="number" name="commission" step="0.001" placeholder="交易費率"
+                            required>
+                    </div>
+                    <div class="ss_item">
+                        <label for="star_date" class="ss_itit">選擇回測開始日期</label>
+                        <input id="star_dateInput" type="date" name="star_date" placeholder="開始時間" required>
+                    </div>
+                    <div class="ss_item">
+                        <label for="end_date" class="ss_itit">選擇回測結束日期</label>
+                        <input id="end_dateInput" type="date" name="end_date" placeholder="結束時間" required>
+                    </div>
+                    <button class="backtest_button" onclick="sendBacktest()">回測</button>
+                </div>
+                <div class="strategy_directions">
+                    <h3>資產變化</h3>
+                    <div class="sd_item">
+                        <div class="sd_itit">
+                            <p class="sd_itit_title">期初資產價值</p>
+                            <p id="initialAssetValue" class="initialAssetValue">1000000</p>
+                        </div>
+                        <div class="sd_itit">
+                            
+                            <p class="sd_itit_title">期末資產價值</p>
+                            <p id="portvalue" class="portvalue"></p>
+                            <p id="portValueElement"></p>
+                        </div>
+
+                        
+                    </div>
+                    <div class="sd_item tradeTable" >
+                        <table id="tradeTable">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>DateTime</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="loader_container">
+                <div class="loader" id="loadingSpinner"></div>
+            </div>
+            <div id="tradeoutput">
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<script src="/public/js/index.js"></script>
+
+</html>

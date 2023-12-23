@@ -1,0 +1,259 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Noto Sans TC;
+}
+
+body {
+    margin: 0;
+}
+
+.main {
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.bar {
+    width: 100%;
+    /* border: 1px solid; */
+    /* width: 15%; */
+    /* margin: 5px; */
+    position: fixed;
+    /* top: 0; */
+    /* left: 0; */
+    /* height: 100%; */
+    /* border-right: 1px solid; */
+    /* padding: 15px; */
+    background-color: #D0D0D0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #b9b3b3;
+}
+
+.title {
+    margin-top: 0px;
+    font-family: Noto Sans TC;
+    color: #666;
+    padding: 5px;
+    padding-left: 15px;
+}
+
+.bar_item {
+    font-family: Noto Sans TC;
+    font-weight: 500;
+    color: #666;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.container {
+    /* border: 1px solid; */
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    margin: 5px;
+    /* margin-left: 18%; */
+    margin-top: 60px;
+    justify-content: center;
+}
+
+.bt_title {
+    font-family: Noto Sans TC;
+    /* margin-left: 50px; */
+    margin-top: 15px;
+    width: 1200px;
+    margin-bottom:10px ;
+}
+#stockList{
+    display: flex;
+    width: 1200px;
+    justify-content: space-between;
+}
+.stockName{
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    /* color: #666; */
+    font-family: Noto Sans TC;
+}
+.stockCode{
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    /* color: #666; */
+    font-family: Noto Sans TC;
+}
+.container_group {
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    /* margin-left: 45px; */
+    margin-top: 30px;
+    width: 1200px;
+}
+
+.strategy_set {
+    /* border: 1px solid; */
+    width: 60%;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 10px;
+}
+
+.ss_item {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.select_st{
+    /* border: 1px; */
+}
+.backtest_button{
+    background-color: rgb(220, 220, 220);
+    width: 60px;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13.3px;
+    color: var(--secondary-color-gray-50, #757575);
+    border: 1px;
+}
+input {
+    font-family: Noto Sans TC;
+    border-radius: 3px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13.3px;
+    color: var(--secondary-color-gray-50, #757575);
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 5px;
+    border: 1px;
+}
+
+.select_st {
+    font-family: Noto Sans TC;
+    border-radius: 3px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13.3px;
+    color: var(--secondary-color-gray-50, #757575);
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    padding: 5px;
+    border: 1px;
+}
+
+.ss_itit {
+    width: 100%;
+    font-family: Noto Sans TC;
+    box-sizing: border-box;
+    font-weight: 700;
+    color: #666;
+}
+
+.strategy_directions {
+    /* border: 1px solid; */
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.sd_item {
+    display: flex;
+}
+
+.sd_itit {
+    /* border: 1px solid; */
+    width: 100%;
+    font-family: Noto Sans TC;
+}
+.sd_itit_title{
+    font-family: Noto Sans TC;
+    width: 100%;
+    font-weight: 500;
+}
+
+.initialAssetValue{
+    font-family: Noto Sans TC;
+    font-size: 30px;
+}
+.portvalue{
+    font-family: Noto Sans TC;
+    font-size: 30px;
+}
+.loader_container{
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.loader {
+    border: 1px solid;
+    display:none;
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #6c6e70;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+#tradeoutput{
+    margin-top: 10px;
+    width: 1200px;
+}
+
+
+.tradeoutputimg{
+    width: 100%;
+}
+
+
+
+#tradeTable {
+    height: 200px; /* 设置表格的固定高度 */
+    overflow-y: auto; /* 启用垂直溢出卷轴 */
+    border-collapse: collapse; /* 合并单元格边框 */
+    width: 100%; /* 设置表格宽度为100% */
+}
+
+#tradeTable th, #tradeTable td {
+    border: 1px solid #ddd; /* 设置单元格边框 */
+    padding: 8px; /* 设置单元格内边距 */
+    text-align: left; /* 文本左对齐 */
+}
+
+#tradeTable thead th {
+    background-color: #f2f2f2; /* 设置表头背景颜色 */
+}
+
+.tradeTable{
+    height: 500px; /* 设置表格的固定高度 */
+    overflow-y: auto; /* 启用垂直溢出卷轴 */
+    border-collapse: collapse; /* 合并单元格边框 */
+    width: 100%; /* 设置表格宽度为100% */
+}
